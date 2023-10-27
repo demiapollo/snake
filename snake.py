@@ -1,0 +1,55 @@
+from turtle import Turtle
+
+MOVE_DISTANCE = 20
+UP = 90
+DOWN = 270
+LEFT = 180
+RIGHT = 0
+
+class Snake():
+    """A Snake with three boxes attached together."""
+
+    def __init__(self):
+        """Initialize the snake."""
+        self.segments = []
+        self.create_snake()
+        self.head = self.segments[0]
+
+    def create_snake(self):
+        """Create the snake"""
+        for turtle_index in range(0, 3):
+            new_segment = Turtle(shape="square")
+            new_segment.color("white")
+            new_segment.penup()
+            new_segment.goto(x=0 - (turtle_index * 20), y=0)
+            self.segments.append(new_segment)
+
+    def move(self):
+        """Moving the snake as a single segment."""
+        
+        for seg_num in range(len(self.segments) - 1, 0, -1):
+            new_x = self.segments[seg_num - 1].xcor()
+            new_y = self.segments[seg_num - 1].ycor()
+            self.segments[seg_num].goto(new_x, new_y)
+
+        self.head.forward(MOVE_DISTANCE)
+
+    def up(self):
+        """Moving the snake up."""
+        if self.head.heading() != DOWN:
+            self.head.setheading(UP)
+
+    def down(self):
+        """Moving the snake down."""
+        if self.head.heading() != UP:
+            self.head.setheading(DOWN)
+
+    def right(self):
+        """Moving the snake to right."""
+        if self.head.heading() != LEFT:
+            self.head.setheading(RIGHT)
+
+    def left(self):
+        """Moving the snake to left."""
+        if self.head.heading() != RIGHT:
+            self.head.setheading(LEFT)
